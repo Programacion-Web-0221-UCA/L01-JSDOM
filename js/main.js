@@ -8,21 +8,21 @@ const transactions = [];
  */
 const addFormListener = () => {
     const form = document.querySelector("#add-transaction-form");
-    
-    form.addEventListener("submit",  (e) => {
-      e.preventDefault();
 
-      const data = new FormData(form);
-    
-      const conceptInput = data.get("concept");
-      const amountInput = data.get("amount");
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
 
-      if(!areValidFields(conceptInput, amountInput)) return;
+        const data = new FormData(form);
 
-      addTransaction(conceptInput, amountInput);
-      renderTransactions();
-      
-      form.reset();
+        const conceptInput = data.get("concept");
+        const amountInput = data.get("amount");
+
+        if (!areValidFields(conceptInput, amountInput)) return;
+
+        addTransaction(conceptInput, amountInput);
+        renderTransactions();
+
+        form.reset();
     })
 }
 
@@ -31,12 +31,12 @@ const addFormListener = () => {
  */
 const areValidFields = (concept, amount) => {
 
-    if(!(concept && amount)) return false;
+    if (!(concept && amount)) return false;
 
     const amountNumber = Number(amount);
 
-    if(isNaN(amountNumber)) return false;
-    
+    if (isNaN(amountNumber)) return false;
+
     return true;
 
 }
@@ -72,24 +72,24 @@ const renderListElement = (concept = "", amount = 0) => {
     </li>
     \n
     `
-} 
+}
 
 const renderTransactions = () => {
     const transactionsList = document.getElementById("transactions");
     const resultTitle = document.querySelector("#result-container h3");
     const resultAmount = document.querySelector("#result-container p");
     let totalAmount = 0;
-    
+
     const transactionsHTML = transactions.reduce((acc, current) => {
         const { concept, amount } = current;
-        
+
         totalAmount += amount;
-        
+
         return acc + `${renderListElement(concept, amount)}`;
     }, '')
 
     transactionsList.innerHTML = transactionsHTML;
-    
+
     resultTitle.textContent = totalAmount < 0 ? "Debes" : "Tienes";
     resultAmount.textContent = `$ ${totalAmount.toFixed(2)}`;
 }
