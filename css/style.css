@@ -1,22 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Varela&display=swap');
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Varela', sans-serif;
-}
-
+/* Definición de variables */
 :root {
     --primary-color: #1A2236;
     --primary-dark-color: #131928;
     --accent-color: #D43765;
+    --accent-dark-color: #af1f4a;
     --background-color: #141922;
     --text-color: white;
     --hint-color: #8B8787;
 
     --default-gap: 1.5rem;
+}
 
+/* Reset de propiedades */
+* {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Varela', sans-serif;
+
+    /* La función var() se utiliza para utilizar variables */
     color: var(--text-color);
 }
 
@@ -24,32 +30,30 @@ body {
     width: 100%;
     min-height: 100vh;
 
-    background-color: var(--background-color);
-    
     display: flex;
     justify-content: center;
     align-items: center;
-}
 
-h3 {
-    font-size: 1rem;
-    font-weight: 400;
+    background-color: var(--background-color);
 }
 
 main {
     width: 100%;
     max-width: 600px;
 
-    position: relative;
-    
     margin: var(--default-gap);
 
+    transition: ease-in-out all 0.5s;
+
+    position: relative;
+
+    /* Para que el elemento se pueda posicionar en todos los ejes */
     transform-style: preserve-3d;
-    transition: transform ease-in-out 0.5s;
 }
 
-main:focus,
-main:focus-within {
+/* Pseudoclase para cuando el elemento está seleccionado */
+main:focus, main:focus-within {
+    /* Transforma el elemento rotándolo 180 grados */
     transform: rotateY(180deg);
 }
 
@@ -57,77 +61,79 @@ section.card {
     width: 100%;
     height: 80vh;
 
-    padding: calc(var(--default-gap)*1.5);
-
-    background: var(--primary-color);
-
     display: flex;
     flex-direction: column;
 
+    /* Función calc() para calcular  */
+    padding: calc(var(--default-gap) * 1.5);
+
     border-radius: 1rem;
-    overflow-y: auto;
+
+    background-color: var(--primary-color);
 }
 
-section.card h2{
-    margin: var(--default-gap) 0;
-    
-    text-align: center;
-    font-weight: normal;
+section.card h2 {
     font-size: 1.5rem;
+
+    text-align: center;
+    font-weight: 400;
+
+    margin: var(--default-gap) 0;
 }
 
 section#add-section {
-    justify-content: space-between;
     transform: rotateY(180deg);
 }
 
-section#add-section > form {
+section#add-section form {
     display: flex;
     flex-direction: column;
 }
 
-section#add-section > form input {
-    margin: calc(var(--default-gap)/2) 0 var(--default-gap);
-    padding: calc(var(--default-gap)/2);
-    
-    background-color: transparent;
-    color: var(--text-color);
-    font-size: 1.1rem;
+section#add-section form input {
+    padding: calc(var(--default-gap) /2);
+    margin: calc(var(--default-gap) /2) 0 var(--default-gap);
 
-    border: solid 1px var(--hint-color);
+    background-color: transparent;
+
+    border: solid var(--hint-color) 2px;
     border-radius: 0.5rem;
 }
 
-section#add-section > form input:focus::placeholder{ color: transparent}
-
-section#add-section > form button {
-    padding: calc(var(--default-gap)/2);
-
+section#add-section form button {
     background-color: var(--accent-color);
-    
-    color: var(--text-color);
-    font-size: 1.1rem;
-    text-transform: capitalize;
+
+    padding: calc(var(--default-gap) /2);
 
     border: none;
     border-radius: 0.5rem;
 
     cursor: pointer;
+
+    text-transform: uppercase;
 }
 
-#result-container {
+section#add-section form button:hover,
+section#add-section form button:focus,
+section#add-section form button:focus-within {
+    background-color: var(--accent-dark-color);
+}
+
+div#result-container {
     margin: var(--default-gap) 0;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: var(--default-gap);
 }
 
-#result-container p {
+div#result-container h3 {
+    font-size: 1.1rem;
+    font-weight: 400;
+
+    margin-bottom: var(--default-gap);
+}
+
+div#result-container p {
     padding: var(--default-gap);
 
-    background: var(--primary-dark-color);
+    background-color: var(--primary-dark-color);
 
     text-align: center;
     font-size: 1.5rem;
@@ -135,44 +141,34 @@ section#add-section > form button {
 
 section#summary-section {
     position: absolute;
-    inset: 0;
 
+    /* Para que la parte de atrás de la tarjeta no sea visible */
     backface-visibility: hidden;
 }
 
-section#summary-section > ol {
-    padding: 0  var(--default-gap);
+section#summary-section ul {
     list-style: none;
+
+    padding: var(--default-gap);
+
     overflow: hidden;
     overflow-y: auto;
 }
 
-section#summary-section > ol > li {
-    min-width: 0;
+section#summary-section ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     
-    display: grid;
-    grid-template-columns: 1fr 15ch;
-    gap: 0.75rem;
-
     margin-bottom: var(--default-gap);
 }
 
-section#summary-section li div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-section#summary-section li div:nth-child(2) {
+section#summary-section ul li div:nth-child(2) {
     text-align: right;
 }
 
-section#summary-section li div > p {
-    text-overflow: ellipsis;
-    overflow: hidden;
+section#summary-section ul li div p:nth-child(2) {
+    font-size: 0.8rem;
+    color: var(--hint-color)
 }
 
-section#summary-section li div > p:nth-child(2) {
-    color: var(--hint-color);
-    font-size: 0.8rem
-}
